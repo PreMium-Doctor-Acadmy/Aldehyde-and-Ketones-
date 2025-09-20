@@ -1,0 +1,2045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PreMium Doctor Academy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #1a56db;
+            --secondary-blue: #0ea5e9;
+            --dark-blue: #1e3a8a;
+            --light-blue: #dbeafe;
+            --accent-green: #10b981;
+            --accent-orange: #f59e0b;
+            --accent-red: #ef4444;
+            --gradient-blue: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            --gradient-green: linear-gradient(135deg, var(--accent-green), #34d399);
+            --gradient-orange: linear-gradient(135deg, var(--accent-orange), #f97316);
+            --gradient-red: linear-gradient(135deg, var(--accent-red), #f87171);
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 3px 8px rgba(0, 0, 0, 0.12);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 8px;
+            color: #1e3a8a;
+            font-size: 11px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .logo h1 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--dark-blue);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.08);
+            margin-bottom: 2px;
+        }
+
+        .logo p {
+            color: var(--primary-blue);
+            font-weight: 600;
+            font-size: 0.7rem;
+        }
+
+        .page {
+            background: white;
+            border-radius: 6px;
+            padding: 12px;
+            box-shadow: var(--shadow-lg);
+            width: 100%;
+            display: none;
+            position: relative;
+        }
+
+        .active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Reusable UI Elements */
+        .promo-banner {
+            background: linear-gradient(135deg, #1e3a8a, #1a56db);
+            color: white;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 0.6rem;
+        }
+
+        .promo-banner h2 {
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            color: #ffd700;
+        }
+
+        .promo-banner p {
+            line-height: 1.4;
+            text-align: justify;
+        }
+
+        .form-group {
+            margin-bottom: 8px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 2px;
+            font-weight: 600;
+            color: var(--dark-blue);
+            font-size: 0.7rem;
+        }
+
+        .form-input, .form-select {
+            width: 100%;
+            padding: 6px 9px;
+            border: 1.5px solid var(--light-blue);
+            border-radius: 5px;
+            font-size: 0.7rem;
+            background: #f8fafc;
+            transition: all 0.2s;
+        }
+
+        .form-input:focus, .form-select:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 2px rgba(26, 86, 219, 0.15);
+        }
+
+        .input-container {
+            position: relative;
+        }
+
+        .password-container .form-input {
+            padding-right: 30px;
+        }
+
+        .input-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-blue);
+            font-size: 0.7rem;
+            cursor: pointer;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6px 10px;
+            border: none;
+            border-radius: 5px;
+            font-weight: 700;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            gap: 4px;
+            width: 100%;
+        }
+
+        .btn-primary {
+            background: var(--gradient-blue);
+            color: white;
+            box-shadow: var(--shadow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 6px rgba(26, 86, 219, 0.2);
+        }
+
+        .btn-contact {
+            background: linear-gradient(135deg, var(--accent-green), #22c55e);
+            color: white;
+            box-shadow: var(--shadow);
+        }
+
+        .btn-contact:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 6px rgba(16, 185, 129, 0.2);
+        }
+
+        .btn-whatsapp {
+            background: linear-gradient(135deg, #25d366, #128c7e);
+            color: white;
+            box-shadow: var(--shadow);
+        }
+
+        .btn-whatsapp:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 6px rgba(37, 211, 102, 0.2);
+        }
+
+        .btn-purple {
+            background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+            color: white;
+            box-shadow: var(--shadow);
+        }
+
+        .btn-purple:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 6px rgba(139, 92, 246, 0.2);
+        }
+
+        .btn-red {
+            background: linear-gradient(135deg, #ef4444, #f87171);
+            color: white;
+            box-shadow: var(--shadow);
+        }
+
+        .btn-red:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 6px rgba(239, 68, 68, 0.2);
+        }
+
+        .error-box {
+            background: #fee2e2;
+            color: var(--accent-red);
+            padding: 5px 7px;
+            border-radius: 3px;
+            margin-top: 6px;
+            display: none;
+            font-weight: 600;
+            font-size: 0.7rem;
+        }
+
+        /* Main Page */
+        .main-page-buttons {
+            display: grid;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        /* Quiz Access Section */
+        .quiz-access-section {
+            display: none;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        /* Payment Section */
+        .payment-info {
+            background: #f0f9ff;
+            border-radius: 5px;
+            padding: 10px;
+            border: 1px solid var(--light-blue);
+            margin-bottom: 8px;
+        }
+
+        .payment-info h3 {
+            font-size: 0.8rem;
+            color: var(--dark-blue);
+            margin-bottom: 6px;
+            text-align: center;
+        }
+
+        .payment-info p {
+            font-size: 0.7rem;
+            margin-bottom: 4px;
+            line-height: 1.2;
+        }
+
+        .payment-info span {
+            font-weight: 600;
+        }
+
+        .acknowledgment-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.7rem;
+            margin-top: 8px;
+            font-weight: 500;
+            color: #4b5563;
+        }
+
+        /* Quiz Section */
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+            padding-bottom: 6px;
+            border-bottom: 1.5px solid var(--light-blue);
+        }
+
+        .quiz-title-container {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            width: 80%;
+        }
+
+        .quiz-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 0.7rem;
+            color: var(--dark-blue);
+            font-weight: 600;
+        }
+
+        .timer-container {
+            display: flex;
+            gap: 6px;
+            justify-content: flex-end;
+            width: 100%;
+        }
+
+        .timer, .question-timer {
+            background: var(--gradient-blue);
+            color: white;
+            padding: 3px 6px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.7rem;
+            box-shadow: var(--shadow);
+            white-space: nowrap;
+        }
+
+        .timer.total-timer {
+            background: var(--gradient-orange);
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 4px;
+            background: #e5e7eb;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.4s ease;
+            background: var(--gradient-blue);
+        }
+
+        .question-nav {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(14px, 1fr));
+            gap: 3px;
+            margin-bottom: 8px;
+        }
+
+        .question-nav-item {
+            width: 14px;
+            height: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 3px;
+            font-weight: 700;
+            font-size: 0.5rem;
+            cursor: pointer;
+            background: white;
+            border: 1.5px solid var(--light-blue);
+            transition: all 0.2s;
+        }
+
+        .question-nav-item.current {
+            background: var(--gradient-blue);
+            color: white;
+            border-color: var(--primary-blue);
+        }
+
+        .question-nav-item.solved {
+            background: var(--gradient-green);
+            color: white;
+            border-color: var(--accent-green);
+        }
+
+        .question-nav-item.visited {
+            background: var(--gradient-orange);
+            color: white;
+            border-color: var(--accent-orange);
+        }
+
+        .question-nav-item.out-of-syllabus {
+            background: var(--gradient-red);
+            color: white;
+            border-color: var(--accent-red);
+        }
+
+        .question-container {
+            margin-bottom: 8px;
+        }
+
+        .question-text {
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--dark-blue);
+        }
+
+        .options-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 4px;
+        }
+
+        .option {
+            padding: 5px 8px;
+            border: 1.5px solid var(--light-blue);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+            background: #f8fafc;
+            font-size: 0.7rem;
+        }
+
+        .option:hover {
+            border-color: var(--primary-blue);
+            background: #e0f2fe;
+        }
+
+        .option.selected {
+            border-color: var(--primary-blue);
+            background: #dbeafe;
+        }
+
+        .option.correct {
+            border-color: var(--accent-green);
+            background: #d1fae5;
+        }
+
+        .option.incorrect {
+            border-color: var(--accent-red);
+            background: #fee2e2;
+        }
+
+        .reasoning {
+            background: #f8fafc;
+            border-radius: 5px;
+            padding: 8px;
+            margin-top: 8px;
+            display: none;
+            border-left: 3px solid var(--primary-blue);
+            font-size: 0.7rem;
+        }
+
+        .reasoning-title {
+            font-weight: 700;
+            margin-bottom: 4px;
+            color: var(--dark-blue);
+            font-size: 0.75rem;
+        }
+
+        .navigation-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            margin-top: 12px;
+        }
+
+        .nav-btn {
+            padding: 5px 7px;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .btn-back {
+            background: linear-gradient(135deg, #3b82f6, #60a5fa);
+            color: white;
+        }
+
+        .btn-next {
+            background: linear-gradient(135deg, #1d4ed8, #3b82f6);
+            color: white;
+        }
+
+        .btn-skip {
+            background: linear-gradient(135deg, #f59e0b, #fbbf24);
+            color: white;
+        }
+
+        .btn-reasoning {
+            background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+            color: white;
+        }
+
+        .btn-out-of-syllabus {
+            background: linear-gradient(135deg, #ef4444, #f87171);
+            color: white;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, #10b981, #34d399);
+            color: white;
+        }
+
+        /* Results Page */
+        .results-header-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-bottom: 12px;
+        }
+
+        .results-header-buttons .btn {
+            padding: 4px 6px;
+            font-size: 0.65rem;
+        }
+
+        .result-card {
+            background: linear-gradient(135deg, #f8fafc, #e0f2fe);
+            border-radius: 6px;
+            padding: 12px;
+            text-align: center;
+            margin-bottom: 12px;
+            box-shadow: var(--shadow);
+        }
+
+        .result-card table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.7rem;
+            margin-top: 8px;
+        }
+
+        .result-card th, .result-card td {
+            padding: 5px;
+            border: 1px solid #dbeafe;
+            text-align: left;
+        }
+
+        .result-card th {
+            background-color: var(--light-blue);
+            font-weight: 600;
+        }
+
+        .result-card td {
+            background-color: #f8fafc;
+        }
+
+        .result-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-top: 12px;
+        }
+
+        /* All MCQs Page */
+        .all-mcqs-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .all-mcq-item {
+            padding: 10px;
+            border: 1px solid var(--light-blue);
+            border-radius: 6px;
+            background: #f8fafc;
+        }
+
+        .all-mcq-item .question-text {
+            color: var(--dark-blue);
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .all-mcq-options {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            margin-top: 6px;
+        }
+
+        .all-mcq-option {
+            font-size: 0.7rem;
+            padding: 4px 6px;
+            border-radius: 4px;
+        }
+
+        .all-mcq-option.correct {
+            background: #d1fae5;
+            color: var(--accent-green);
+            font-weight: 600;
+        }
+
+        .all-mcq-reasoning {
+            margin-top: 8px;
+            font-size: 0.7rem;
+            color: #4b5563;
+        }
+
+        .all-mcq-reasoning strong {
+            color: var(--dark-blue);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .quiz-header {
+                flex-direction: column;
+                gap: 6px;
+                align-items: flex-start;
+            }
+            
+            .navigation-buttons {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-buttons {
+                grid-template-columns: 1fr;
+            }
+            
+            .compact-contact-buttons {
+                grid-template-columns: 1fr;
+            }
+            
+            .result-actions {
+                flex-direction: column;
+            }
+            
+            .timer-container {
+                position: relative;
+                top: auto;
+                right: auto;
+                margin-top: 5px;
+                justify-content: flex-end;
+                width: 100%;
+            }
+            
+            .quiz-title-container {
+                width: 100%;
+            }
+            
+            .dmc-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .dmc-grades, .dmc-performance-bars {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .dmc-watermark {
+                font-size: 2rem;
+            }
+            
+            .promo-banner {
+                padding: 12px;
+            }
+            
+            .promo-banner h2 {
+                font-size: 0.8rem;
+            }
+            
+            .promo-banner p {
+                font-size: 0.55rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <h1>PreMium Doctor Academy</h1>
+            <p>Excellence in Educational Assessment</p>
+        </div>
+
+        <div id="signin-page" class="page active">
+            <div class="promo-banner">
+                <h2>Unlock Your Potential with PreMium Doctor Academy</h2>
+                <p>Boost your preparation with PreMium Doctor Academy's realistic online tests, crafted by experts to mirror the actual exam's pattern and challenge. Experience instant feedback, detailed analysis, and flexible online access – your pathway to confidence and success!</p>
+            </div>
+            
+            <h2 style="font-size: 0.9rem; margin-bottom: 4px;">Access Test</h2>
+            <p style="font-size: 0.7rem; margin-bottom: 8px;">Sign in or use your access code</p>
+            
+            <div class="main-page-buttons">
+                <button class="btn btn-primary" onclick="showQuizAccessForm()">
+                    <i class="fas fa-lock"></i>
+                    <span>Sign In with Quiz Access Code</span>
+                </button>
+                <button class="btn btn-primary" onclick="showRegistrationPage()">
+                    <i class="fas fa-user-plus"></i>
+                    <span>Sign Up to Get Quiz Access</span>
+                </button>
+                <button class="btn btn-purple" onclick="showDeveloperAccessForm()">
+                    <i class="fas fa-code"></i>
+                    <span>Developer Access</span>
+                </button>
+            </div>
+            
+            <div id="developer-access-form" class="quiz-access-section">
+                <h3 style="font-size: 0.8rem;">Developer Login</h3>
+                <div class="password-container input-container">
+                    <input type="password" id="developerPassword" class="form-input" placeholder="Enter the Developer Password">
+                    <i class="fas fa-eye-slash input-icon" id="toggleDeveloperPassword"></i>
+                </div>
+                <button class="btn btn-purple" onclick="checkDeveloperPassword()">
+                    <span>Log In</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+                <div id="dev-error-box" class="error-box">
+                    Invalid developer password.
+                </div>
+            </div>
+            
+            <div id="quiz-access-form" class="quiz-access-section">
+                <h3 style="font-size: 0.8rem;">Enter Quiz Access Code</h3>
+                <div class="password-container input-container">
+                    <input type="password" id="quizAccessCode" class="form-input" placeholder="Enter your 12-Digit Quiz Access Code here">
+                    <i class="fas fa-eye-slash input-icon" id="toggleQuizAccessCode"></i>
+                </div>
+                <button class="btn btn-primary" onclick="checkQuizAccessCode()">
+                    <span>Access Quiz</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+                <div id="quiz-error-box" class="error-box">
+                    Invalid quiz access code.
+                </div>
+            </div>
+            
+        </div>
+
+        <div id="registration-page" class="page">
+            <div class="promo-banner">
+                <h2>Unlock Your Potential with PreMium Doctor Academy</h2>
+                <p>Boost your preparation with PreMium Doctor Academy's realistic online tests, crafted by experts to mirror the actual exam's pattern and challenge. Experience instant feedback, detailed analysis, and flexible online access – your pathway to confidence and success!</p>
+            </div>
+            
+            <h2 style="font-size: 0.9rem; margin-bottom: 4px;">Student Registration</h2>
+            <p style="font-size: 0.7rem; margin-bottom: 8px;">Please provide your details to register</p>
+            
+            <div class="form-group">
+                <label class="form-label">Student Name</label>
+                <input type="text" id="studentName" class="form-input" placeholder="Enter your full name">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Father Name</label>
+                <input type="text" id="fatherName" class="form-input" placeholder="Enter your father's name">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Email Address</label>
+                <input type="email" id="email" class="form-input" placeholder="Enter your email address">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Mobile Number (WhatsApp)</label>
+                <input type="tel" id="mobile" class="form-input" placeholder="+92XXXXXXXXXX">
+            </div>
+            <div class="form-group">
+            </div>
+            <button class="btn btn-primary" onclick="validateRegistrationForm()">
+                <span>Proceed to Payment</span>
+                <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+
+        <div id="payment-page" class="page">
+            <div class="promo-banner">
+                <h2>Unlock Your Potential with PreMium Doctor Academy</h2>
+                <p>Boost your preparation with PreMium Doctor Academy's realistic online tests, crafted by experts to mirror the actual exam's pattern and challenge. Experience instant feedback, detailed analysis, and flexible online access – your pathway to confidence and success!</p>
+            </div>
+            
+            <h2 style="font-size: 0.9rem; margin-bottom: 4px;">Payment Details</h2>
+            <p style="font-size: 0.7rem; margin-bottom: 8px;">Please complete the payment to receive your access code</p>
+            
+            <div class="payment-info">
+                <h3>Payment Information</h3>
+                <p>Please make payment through our official payment methods. After payment, you will receive an access code.</p>
+                <p style="margin-top: 8px; font-weight: bold;">Contact us on WhatsApp at <a href="https://wa.me/923247012882" style="color: var(--accent-green); text-decoration: none;">+923247012882</a> for payment details.</p>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Transaction ID</label>
+                <input type="text" id="transactionId" class="form-input" placeholder="Enter transaction ID">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Your Account Holder Name</label>
+                <input type="text" id="accountHolderName" class="form-input" placeholder="Enter your payment account name">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Amount Sent</label>
+                <input type="number" id="amountSent" class="form-input" placeholder="Enter amount">
+            </div>
+            <div class="acknowledgment-checkbox">
+                <input type="checkbox" id="acknowledgment">
+                <label for="acknowledgment">I acknowledge that I have submitted the correct information and payment.</label>
+            </div>
+            
+            <button class="btn btn-primary" onclick="submitPayment()">
+                <span>Submit Payment Info</span>
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+
+        <div id="quiz-access-page" class="page">
+            <div class="promo-banner">
+                <h2>Unlock Your Potential with PreMium Doctor Academy</h2>
+                <p>Boost your preparation with PreMium Doctor Academy's realistic online tests, crafted by experts to mirror the actual exam's pattern and challenge. Experience instant feedback, detailed analysis, and flexible online access – your pathway to confidence and success!</p>
+            </div>
+            
+            <h2 style="font-size: 0.9rem; margin-bottom: 4px;">Quiz Access</h2>
+            <p style="font-size: 0.7rem; margin-bottom: 8px; font-weight: 600;">A Quiz Access Code will be sent to your registered mobile number after we receive and verify your payment.</p>
+
+            <div class="password-container input-container">
+                <input type="password" id="quizAccessFinal" class="form-input" placeholder="Enter your 12-Digit Quiz Access Code here">
+                <i class="fas fa-eye-slash input-icon" id="toggleQuizAccessFinal"></i>
+            </div>
+            
+            <button class="btn btn-primary" onclick="accessQuiz()">
+                <span>Access Quiz</span>
+                <i class="fas fa-arrow-right"></i>
+            </button>
+            
+            <div id="final-quiz-error-box" class="error-box">
+                Invalid quiz access code.
+            </div>
+        </div>
+        
+        <div id="quiz-page" class="page">
+            <div class="promo-banner">
+                <h2 style="font-size: 0.8rem; margin-bottom: 4px;">Unlock Your Potential with PreMium Doctor Academy</h2>
+                <p style="font-size: 0.6rem;">Boost your preparation with PreMium Doctor Academy's realistic online tests, crafted by experts to mirror the actual exam's pattern and challenge. Experience instant feedback, detailed analysis, and flexible online access – your pathway to confidence and success!</p>
+            </div>
+
+            <div class="quiz-header">
+                <div class="quiz-title-container">
+                    <h2 style="font-size: 0.7rem;" id="quiz-title"></h2>
+                    <div class="quiz-info">
+                        <span>Subject: English Grammar</span>
+                        <span>Per MCQ: 1 Minute</span>
+                    </div>
+                </div>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 8px;">
+                <div class="timer" id="question-timer">60</div>
+                <div class="timer total-timer" id="timer">40:00</div>
+            </div>
+
+            <div class="progress-container">
+                <div class="progress-bar" id="quiz-progress"></div>
+            </div>
+
+            <div class="question-nav" id="question-nav"></div>
+            
+            <div class="question-container">
+                <div class="question-text" id="question-text"></div>
+                <div class="options-container" id="options-container"></div>
+                <div class="reasoning" id="reasoning">
+                    <div class="reasoning-title">Explanation:</div>
+                    <div id="reasoning-text"></div>
+                </div>
+            </div>
+            
+            <div class="navigation-buttons">
+                <button class="nav-btn btn-back" onclick="navigateQuestion('prev')">
+                    <i class="fas fa-arrow-left"></i> Back
+                </button>
+                <button class="nav-btn btn-next" onclick="navigateQuestion('next')">
+                    Next <i class="fas fa-arrow-right"></i>
+                </button>
+                <button class="nav-btn btn-skip" onclick="navigateQuestion('skip')">
+                    <i class="fas fa-forward"></i> Skip
+                </button>
+                <button class="nav-btn btn-out-of-syllabus" onclick="markOutOfSyllabus()">
+                    <i class="fas fa-ban"></i> Out of Syllabus
+                </button>
+                <button class="nav-btn btn-reasoning" onclick="toggleReasoning()">
+                    <i class="fas fa-lightbulb"></i> Reasoning
+                </button>
+                <button class="nav-btn btn-submit" onclick="submitTest()">
+                    Submit <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+
+        <div id="results-page" class="page">
+            <div class="results-header-buttons">
+                <a href="https://premiumdoctoracademy.com" target="_blank" class="btn btn-primary"><i class="fas fa-globe"></i> Website</a>
+                <a href="https://wa.me/923247012882" target="_blank" class="btn btn-whatsapp"><i class="fab fa-whatsapp"></i> Whatsapp Contact</a>
+                <a href="https://whatsapp.com/channel/0029VbBCnMDHAdNVl9hGKJ3B" target="_blank" class="btn btn-whatsapp"><i class="fab fa-whatsapp"></i> Whatsapp Community</a>
+            </div>
+            
+            <div class="result-card">
+                <h2 style="font-size: 0.9rem;">Student Information</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Field</th>
+                            <th>Detail</th>
+                        </tr>
+                    </thead>
+                    <tbody id="student-info-table"></tbody>
+                </table>
+            </div>
+
+            <div class="result-card">
+                <h2 style="font-size: 0.9rem;">Test Results</h2>
+                <table>
+                    <tbody id="quiz-results-table"></tbody>
+                </table>
+            </div>
+            
+            <div class="result-actions">
+                <button class="btn btn-primary" onclick="restartTest()">
+                    <i class="fas fa-redo"></i> Retake Full Test
+                </button>
+                <button class="btn btn-primary" onclick="retakeIncorrect()">
+                    <i class="fas fa-bolt"></i> Retake Incorrect Questions
+                </button>
+                <button class="btn btn-primary" onclick="viewAllMcqs()">
+                    <i class="fas fa-clipboard-list"></i> View All MCQs
+                </button>
+            </div>
+        </div>
+
+        <div id="all-mcqs-page" class="page">
+            <h2 style="font-size: 0.9rem; margin-bottom: 8px;">All MCQs and Solutions</h2>
+            <div class="all-mcqs-list" id="all-mcqs-list"></div>
+            <button class="btn btn-primary" style="margin-top: 15px;" onclick="showPage('results-page')">
+                <i class="fas fa-arrow-left"></i> Back to Results
+            </button>
+        </div>
+    </div>
+    
+    <script>
+// Quiz data - General Knowledge MCQs
+const quizData_PreMium_001 = [
+    {
+        question: "Which of the following represents the IUPAC name of CH3–CH2–CH2–CO–CH3?",
+        options: [
+            "Butan-2-one",
+            "Pentan-2-one",
+            "Pentan-3-one",
+            "2-Butanone",
+        ],
+        correctAnswer: 1,
+        reasoning: "Longest chain has five carbons and carbonyl carbon gets lowest number → pentan-2-one."
+    },
+    {
+        question: "The IUPAC name of p-tolualdehyde is:",
+        options: [
+            "4-Methylbenzaldehyde",
+            "1-Methylbenzaldehyde",
+            "2-Methylbenzenecarbaldehyde",
+            "3-Methylbenzaldehyde",
+        ],
+        correctAnswer: 0,
+        reasoning: "Aldehyde is at position 1, methyl at para-position → 4-methylbenzaldehyde."
+    },
+    {
+        question: "Acetophenone is systematically named as:",
+        options: [
+            "Phenylmethanone",
+            "Benzyl methyl ketone",
+            "1-Phenylethanone",
+            "Phenylethanol",
+        ],
+        correctAnswer: 2,
+        reasoning: "Parent chain is ethanone with phenyl substituent on C-1 → 1-phenylethanone."
+    },
+    {
+        question: "Which compound is correctly named as cyclohexanecarbaldehyde?",
+        options: [
+            "C6H11–CHO",
+            "C6H5–CHO",
+            "CH3–CHO",
+            "Cyclohexanone",
+        ],
+        correctAnswer: 0,
+        reasoning: "–CHO attached directly to cyclohexane ring is named cyclohexanecarbaldehyde."
+    },
+    {
+        question: "Which of the following is an α,β-unsaturated aldehyde?",
+        options: [
+            "Propanal",
+            "Crotonaldehyde",
+            "Acetophenone",
+            "Formaldehyde",
+        ],
+        correctAnswer: 1,
+        reasoning: "Crotonaldehyde (CH3–CH=CH–CHO) has C=C conjugated with –CHO, hence α,β-unsaturated."
+    },
+    {
+        question: "Which statement is TRUE about C=O bond length?",
+        options: [
+            "Longer than C=C",
+            "Shorter than C=C",
+            "Equal to C–C single bond",
+            "Longer than C–O single bond",
+        ],
+        correctAnswer: 1,
+        reasoning: "C=O has partial double bond character, shorter than C=C due to higher polarity."
+    },
+    {
+        question: "The polarity of carbonyl group is due to:",
+        options: [
+            "Electrons localized on carbon",
+            "sp3 hybridization",
+            "Oxygen attracting electrons via inductive & mesomeric effect",
+            "σ-bond shift only",
+        ],
+        correctAnswer: 2,
+        reasoning: "Oxygen’s electronegativity creates strong dipole via inductive & resonance effects."
+    },
+    {
+        question: "Which factor increases electrophilicity of carbonyl carbon most strongly?",
+        options: [
+            "–CH3 group",
+            "–Cl group",
+            "–OH group",
+            "–NH2 group",
+        ],
+        correctAnswer: 1,
+        reasoning: "–Cl withdraws electrons strongly by –I effect, increasing δ+ character on carbonyl carbon."
+    },
+    {
+        question: "In resonance of carbonyl group, which form is major contributor?",
+        options: [
+            "Neutral form with double bond",
+            "Dipolar form with O– and C+",
+            "Free radical form",
+            "None",
+        ],
+        correctAnswer: 0,
+        reasoning: "Neutral form is lower in energy and hence major contributor, though dipolar contributes partially."
+    },
+    {
+        question: "Which has highest C=O stretching frequency in IR?",
+        options: [
+            "Formaldehyde",
+            "Acetone",
+            "Benzaldehyde",
+            "Amide",
+        ],
+        correctAnswer: 0,
+        reasoning: "Less conjugation in formaldehyde → stronger C=O → higher stretching frequency."
+    },
+    {
+        question: "Ozonolysis of 1-butene gives:",
+        options: [
+            "Butanal",
+            "Two molecules of ethanal",
+            "Formaldehyde + Propanal",
+            "Acetone + CO2",
+        ],
+        correctAnswer: 1,
+        reasoning: "Cleavage of CH2=CH–CH2–CH3 at double bond gives 2 ethanal molecules."
+    },
+    {
+        question: "Which alkene gives only acetone upon ozonolysis?",
+        options: [
+            "2-Butene",
+            "2-Pentene",
+            "2-Methyl-2-butene",
+            "2,3-Dimethyl-2-butene",
+        ],
+        correctAnswer: 3,
+        reasoning: "Symmetric tetrasubstituted alkene yields two identical ketones → acetone."
+    },
+    {
+        question: "Reductive workup in ozonolysis uses:",
+        options: [
+            "H2O2",
+            "Zn/AcOH",
+            "KMnO4",
+            "PCC",
+        ],
+        correctAnswer: 1,
+        reasoning: "Zn/AcOH prevents oxidation of aldehydes to acids by reducing ozonide."
+    },
+    {
+        question: "Oxidative ozonolysis of CH2=CH2 gives:",
+        options: [
+            "Ethanal",
+            "Acetic acid",
+            "Formic acid",
+            "Formaldehyde",
+        ],
+        correctAnswer: 2,
+        reasoning: "Oxidative workup converts aldehyde intermediate to carboxylic acid → 2HCOOH."
+    },
+    {
+        question: "Ozonolysis is used to determine:",
+        options: [
+            "Hybridization of carbon",
+            "Position of double bond",
+            "Optical activity",
+            "Boiling point",
+        ],
+        correctAnswer: 1,
+        reasoning: "Cleavage products reveal location of C=C bond in unknown alkene."
+    },
+    {
+        question: "Which Lewis acid is commonly used in Friedel–Crafts acylation?",
+        options: [
+            "FeCl3",
+            "AlCl3",
+            "BF3",
+            "ZnCl2",
+        ],
+        correctAnswer: 1,
+        reasoning: "AlCl3 forms complex with acyl halide generating acylium ion for electrophilic substitution."
+    },
+    {
+        question: "Acylation of chlorobenzene is:",
+        options: [
+            "Slower than benzene",
+            "Faster than benzene",
+            "Equal to benzene",
+            "Impossible",
+        ],
+        correctAnswer: 0,
+        reasoning: "–Cl shows –I effect deactivating ring toward electrophilic substitution."
+    },
+    {
+        question: "Why is polyacylation not observed?",
+        options: [
+            "Acyl group is electron-donating",
+            "Acylium ion is unstable",
+            "Acyl group deactivates ring",
+            "Reaction is reversible",
+        ],
+        correctAnswer: 2,
+        reasoning: "Acyl group withdraws electrons (–I and –M), deactivating ring for further acylation."
+    },
+    {
+        question: "Which cannot undergo Friedel–Crafts acylation?",
+        options: [
+            "Nitrobenzene",
+            "Toluene",
+            "Benzene",
+            "Chlorobenzene",
+        ],
+        correctAnswer: 0,
+        reasoning: "Strongly deactivated rings like nitrobenzene do not undergo EAS reactions."
+    },
+    {
+        question: "Product of benzene + CH3COCl + AlCl3 followed by Zn(Hg)/HCl is:",
+        options: [
+            "Benzene",
+            "Ethylbenzene",
+            "Acetophenone",
+            "Propylbenzene",
+        ],
+        correctAnswer: 1,
+        reasoning: "First step gives acetophenone, second step Clemmensen reduction → ethylbenzene."
+    },
+    {
+        question: "Product of hydration of 2-butyne in presence of Hg2+ is:",
+        options: [
+            "Butanal",
+            "Butan-2-one",
+            "Butan-1-one",
+            "But-2-enol",
+        ],
+        correctAnswer: 1,
+        reasoning: "Enol formed rearranges via keto–enol tautomerism → butan-2-one."
+    },
+    {
+        question: "Which catalyst is used in alkyne hydration?",
+        options: [
+            "Pd/C",
+            "HgSO4 + H2SO4",
+            "AlCl3",
+            "PCC",
+        ],
+        correctAnswer: 1,
+        reasoning: "Hg2+ salts catalyze Markovnikov addition of water to alkyne."
+    },
+    {
+        question: "Hydration of terminal alkyne gives:",
+        options: [
+            "Ketone always",
+            "Aldehyde after tautomerization",
+            "Alcohol",
+            "Alkene",
+        ],
+        correctAnswer: 1,
+        reasoning: "Terminal alkynes yield aldehydes due to formation of enol that tautomerizes."
+    },
+    {
+        question: "Tautomerism involved in hydration is:",
+        options: [
+            "Cis–trans isomerism",
+            "Structural rearrangement of C=C and OH to C=O",
+            "Pericyclic reaction",
+            "Electrophilic substitution",
+        ],
+        correctAnswer: 1,
+        reasoning: "Enol–keto tautomerism shifts double bond and proton leading to carbonyl compound."
+    },
+    {
+        question: "Which gives highest yield of aldehyde on hydration?",
+        options: [
+            "Ethyne",
+            "Propyne",
+            "1-Butyne",
+            "2-Butyne",
+        ],
+        correctAnswer: 0,
+        reasoning: "Ethyne forms vinyl alcohol which tautomerizes to ethanal exclusively."
+    },
+    {
+        question: "Which reagent selectively oxidizes 1° alcohol to aldehyde?",
+        options: [
+            "KMnO4",
+            "PCC",
+            "H2CrO4",
+            "Conc. HNO3",
+        ],
+        correctAnswer: 1,
+        reasoning: "PCC is mild, stops at aldehyde stage without overoxidation."
+    },
+    {
+        question: "Which cannot oxidize secondary alcohol?",
+        options: [
+            "PCC",
+            "KMnO4",
+            "H2O2",
+            "None",
+        ],
+        correctAnswer: 2,
+        reasoning: "H2O2 alone is too weak to oxidize alcohol to ketone under normal conditions."
+    },
+    {
+        question: "Swern oxidation converts:",
+        options: [
+            "1° alcohol to carboxylic acid",
+            "2° alcohol to ketone",
+            "Aldehyde to alcohol",
+            "Ketone to alcohol",
+        ],
+        correctAnswer: 1,
+        reasoning: "Swern oxidation is mild oxidation for alcohol → aldehyde/ketone."
+    },
+    {
+        question: "Jones reagent contains:",
+        options: [
+            "CrO3 + H2SO4 + Acetone",
+            "Cr2O7 + HCl",
+            "KMnO4 + NaOH",
+            "OsO4 + Pyridine",
+        ],
+        correctAnswer: 0,
+        reasoning: "Jones reagent = chromic acid in acetone, oxidizes alcohols to acids/ketones."
+    },
+    {
+        question: "Which cannot be prepared by oxidation of alcohol?",
+        options: [
+            "Aldehyde",
+            "Ketone",
+            "Formaldehyde",
+            "Acetone cyanohydrin",
+        ],
+        correctAnswer: 3,
+        reasoning: "Cyanohydrin is not an oxidation product but addition product of HCN."
+    },
+    {
+        question: "Which is most reactive towards HCN addition?",
+        options: [
+            "Benzaldehyde",
+            "Formaldehyde",
+            "Acetophenone",
+            "Benzophenone",
+        ],
+        correctAnswer: 1,
+        reasoning: "Formaldehyde least hindered & most δ+ carbon → fastest nucleophilic addition."
+    },
+    {
+        question: "Which intermediate is formed in cyanohydrin formation?",
+        options: [
+            "Carbanion at α-carbon",
+            "Tetrahedral alkoxide intermediate",
+            "Carbocation",
+            "Enol",
+        ],
+        correctAnswer: 1,
+        reasoning: "Nucleophilic attack of CN– forms tetrahedral intermediate before protonation."
+    },
+    {
+        question: "Which factor slows base-catalyzed nucleophilic addition?",
+        options: [
+            "More polar solvent",
+            "Bulky groups near C=O",
+            "High electrophilicity",
+            "Strong nucleophile",
+        ],
+        correctAnswer: 1,
+        reasoning: "Steric hindrance near carbonyl reduces nucleophile approach."
+    },
+    {
+        question: "In acid-catalyzed addition of alcohol to carbonyl, final product is:",
+        options: [
+            "Hemiacetal",
+            "Acetal",
+            "Aldol",
+            "Ether",
+        ],
+        correctAnswer: 1,
+        reasoning: "Two moles of alcohol react forming acetal in presence of acid catalyst."
+    },
+    {
+        question: "General order of reactivity towards nucleophilic addition is:",
+        options: [
+            "Ketones > Aldehydes",
+            "Aldehydes > Ketones",
+            "Aromatic ketones > Formaldehyde",
+            "Benzophenone > Acetone",
+        ],
+        correctAnswer: 1,
+        reasoning: "Aldehydes more reactive due to less steric hindrance & more δ+ on carbon."
+    },
+    {
+        question: "Which of the following represents the correct IUPAC name of CH3–CH2–CHO?",
+        options: [
+            "Ethanal",
+            "Propanal",
+            "Propanone",
+            "Methanal",
+        ],
+        correctAnswer: 1,
+        reasoning: "The compound has three carbons with –CHO at the terminal carbon; hence, the IUPAC name is propanal."
+    },
+    {
+        question: "The common name of CH3–C(=O)–CH3 is:",
+        options: [
+            "Acetone",
+            "Propanone",
+            "Dimethyl ketone",
+            "All of these",
+        ],
+        correctAnswer: 3,
+        reasoning: "Acetone, propanone, and dimethyl ketone are all correct names referring to the same molecule."
+    },
+    {
+        question: "Which prefix is used for –CHO group when it is treated as a substituent in IUPAC naming?",
+        options: [
+            "Oxo-",
+            "Formyl-",
+            "Carbaldehyde",
+            "Aldo-",
+        ],
+        correctAnswer: 1,
+        reasoning: "–CHO as a substituent is named \"formyl\" according to IUPAC rules."
+    },
+    {
+        question: "Benzaldehyde is systematically named as:",
+        options: [
+            "Phenylmethanal",
+            "Benzenecarbaldehyde",
+            "Benzal",
+            "Benzylaldehyde",
+        ],
+        correctAnswer: 0,
+        reasoning: "IUPAC names aromatic aldehydes as \"aryl + methanal\", hence phenylmethanal."
+    },
+    {
+        question: "Which of the following molecules is NOT a ketone?",
+        options: [
+            "CH3–CO–CH3",
+            "C6H5–CO–CH3",
+            "HCHO",
+            "CH3–CO–CH2–CH3",
+        ],
+        correctAnswer: 2,
+        reasoning: "HCHO is formaldehyde, an aldehyde, not a ketone. STRUCTURE OF CARBONYL GROUP"
+    },
+    {
+        question: "The hybridization of carbon in a carbonyl group is:",
+        options: [
+            "sp",
+            "sp2",
+            "sp3",
+            "dsp2",
+        ],
+        correctAnswer: 1,
+        reasoning: "The carbonyl carbon is sp2 hybridized with a planar trigonal geometry."
+    },
+    {
+        question: "The carbonyl group is highly polar due to:",
+        options: [
+            "Equal electronegativity of C and O",
+            "Higher electronegativity of O",
+            "Delocalization of electrons",
+            "sp3 hybridization",
+        ],
+        correctAnswer: 1,
+        reasoning: "Oxygen is more electronegative, creating a δ– on O and δ+ on C making it polar."
+    },
+    {
+        question: "Which orbital overlap is responsible for the π-bond in carbonyl?",
+        options: [
+            "sp2–sp2",
+            "p–p lateral overlap",
+            "sp–p overlap",
+            "sp3–p overlap",
+        ],
+        correctAnswer: 1,
+        reasoning: "The π bond in carbonyl is due to lateral overlap of unhybridized p orbitals."
+    },
+    {
+        question: "The bond angle around carbonyl carbon is approximately:",
+        options: [
+            "90°",
+            "109.5°",
+            "120°",
+            "180°",
+        ],
+        correctAnswer: 2,
+        reasoning: "The carbonyl carbon is sp2 hybridized leading to trigonal planar geometry with ~120° angles."
+    },
+    {
+        question: "The resonance in carbonyl group leads to:",
+        options: [
+            "Complete double bond character",
+            "Partial positive charge on O",
+            "Increased reactivity toward electrophiles",
+            "Partial positive charge on C",
+        ],
+        correctAnswer: 3,
+        reasoning: "Resonance delocalization results in partial positive charge on carbon making it susceptible to nucleophilic attack. PREPARATION OF ALDEHYDES & KETONES"
+    },
+    {
+        question: "Ozonolysis of CH2=CH–CH3 gives:",
+        options: [
+            "Formaldehyde + Acetaldehyde",
+            "Acetaldehyde + Formic acid",
+            "Two molecules of acetaldehyde",
+            "Acetone + CO2",
+        ],
+        correctAnswer: 0,
+        reasoning: "Ozonolysis cleaves double bonds and forms CH2O (formaldehyde) and CH3CHO (acetaldehyde)."
+    },
+    {
+        question: "Friedel–Crafts acylation of benzene using CH3COCl gives:",
+        options: [
+            "Benzaldehyde",
+            "Acetophenone",
+            "Phenol",
+            "Benzoic acid",
+        ],
+        correctAnswer: 1,
+        reasoning: "Friedel–Crafts acylation introduces an acyl group producing acetophenone."
+    },
+    {
+        question: "Hydration of ethyne in presence of Hg2+ and H2SO4 gives:",
+        options: [
+            "Ethanol",
+            "Acetaldehyde",
+            "Acetone",
+            "Vinyl alcohol",
+        ],
+        correctAnswer: 1,
+        reasoning: "Enol formed during hydration tautomerizes to acetaldehyde."
+    },
+    {
+        question: "Oxidation of primary alcohol using PCC gives:",
+        options: [
+            "Carboxylic acid",
+            "Aldehyde",
+            "Ketone",
+            "Ester",
+        ],
+        correctAnswer: 1,
+        reasoning: "PCC selectively oxidizes primary alcohols to aldehydes without overoxidation to acids."
+    },
+    {
+        question: "Which reagent converts secondary alcohol into ketone efficiently?",
+        options: [
+            "KMnO4",
+            "PCC",
+            "Jones reagent",
+            "Both b and c",
+        ],
+        correctAnswer: 3,
+        reasoning: "Both PCC and Jones reagent oxidize secondary alcohols to ketones effectively. RELATIVE REACTIVITY (STERIC + ELECTRONIC EFFECTS)"
+    },
+    {
+        question: "Which is more reactive towards nucleophilic addition: CH3–CHO or CH3–CO–CH3?",
+        options: [
+            "Both are equal",
+            "CH3–CHO",
+            "CH3–CO–CH3",
+            "Cannot be predicted",
+        ],
+        correctAnswer: 1,
+        reasoning: "Aldehydes are more reactive due to less steric hindrance and greater δ+ character on carbon."
+    },
+    {
+        question: "Formaldehyde is most reactive among aldehydes because:",
+        options: [
+            "No +I effect and no steric hindrance",
+            "Presence of strong –I effect",
+            "It is gas at room temperature",
+            "It has no resonance",
+        ],
+        correctAnswer: 0,
+        reasoning: "Lack of electron-donating groups increases electrophilicity, and no steric bulk allows easy attack."
+    },
+    {
+        question: "Electron-withdrawing groups on carbonyl carbon:",
+        options: [
+            "Increase reactivity",
+            "Decrease reactivity",
+            "Do not affect",
+            "Convert to carboxylic acid",
+        ],
+        correctAnswer: 0,
+        reasoning: "EWG increase δ+ on carbon, making nucleophilic attack easier."
+    },
+    {
+        question: "Which substituent decreases nucleophilic addition rate most strongly?",
+        options: [
+            "–Cl",
+            "–NO2",
+            "–CH3",
+            "–CF3",
+        ],
+        correctAnswer: 3,
+        reasoning: "–CF3 is strongly electron-withdrawing, greatly increasing δ+ and slowing nucleophilic approach due to inductive pull."
+    },
+    {
+        question: "Acetone is less reactive than acetaldehyde because:",
+        options: [
+            "Strong resonance in acetone",
+            "More steric hindrance and +I effect from two alkyl groups",
+            "Acetone has sp3 carbon",
+            "Oxygen is less electronegative",
+        ],
+        correctAnswer: 1,
+        reasoning: "Two electron-donating alkyl groups reduce electrophilicity of carbonyl carbon and hinder attack. NUCLEOPHILIC ADDITION MECHANISM"
+    },
+    {
+        question: "In base-catalyzed nucleophilic addition, the first step is:",
+        options: [
+            "Protonation of carbonyl oxygen",
+            "Attack of nucleophile on carbonyl carbon",
+            "Removal of leaving group",
+            "Rearrangement",
+        ],
+        correctAnswer: 1,
+        reasoning: "In basic medium, nucleophile attacks first as carbonyl carbon is already electrophilic."
+    },
+    {
+        question: "Acid-catalyzed nucleophilic addition begins with:",
+        options: [
+            "Attack of nucleophile",
+            "Deprotonation",
+            "Protonation of carbonyl oxygen",
+            "Resonance shift",
+        ],
+        correctAnswer: 2,
+        reasoning: "Protonation increases electrophilicity of carbonyl carbon making it more susceptible to nucleophilic attack."
+    },
+    {
+        question: "During nucleophilic addition, the intermediate formed is:",
+        options: [
+            "Carbocation",
+            "Carbanion",
+            "Tetrahedral alkoxide",
+            "Free radical",
+        ],
+        correctAnswer: 2,
+        reasoning: "Nucleophilic attack breaks π bond forming a tetrahedral intermediate with negative oxygen."
+    },
+    {
+        question: "In acid-catalyzed hydration, water acts as:",
+        options: [
+            "Electrophile",
+            "Nucleophile",
+            "Catalyst",
+            "Leaving group",
+        ],
+        correctAnswer: 1,
+        reasoning: "After protonation, water attacks as a nucleophile to give gem-diol."
+    },
+    {
+        question: "Which factor does NOT affect nucleophilic addition rate?",
+        options: [
+            "Steric hindrance",
+            "Electrophilicity of carbonyl",
+            "Solvent polarity",
+            "Melting point of compound",
+        ],
+        correctAnswer: 3,
+        reasoning: "Melting point does not influence the reaction rate, unlike other factors. Would you like me to generate the remaining 30 MCQs (to make a total of 60) continuing with the same difficulty and coverage — especially more on Friedel–Crafts variations, oxidation reagents selectivity, reaction intermediates, and electronic effects? This will make the set even more challenging."
+    }
+];
+
+// Global state variables
+const QUIZ_ACCESS_CODE = "Student-001";
+const DEV_ACCESS_CODE = "Dev-PDA-001";
+
+let currentQuizId = 'PreMium-001';
+let quizData = quizData_PreMium_001;
+let currentQuestion = 0;
+let userAnswers = Array(quizData.length).fill(null);
+let outOfSyllabusQuestions = Array(quizData.length).fill(false);
+let timeLeft;
+let questionTimeLeft;
+let totalTimeInterval;
+let questionTimeInterval;
+let studentData = {};
+
+// DOM elements
+const signinPage = document.getElementById('signin-page');
+const registrationPage = document.getElementById('registration-page');
+const paymentPage = document.getElementById('payment-page');
+const quizAccessPage = document.getElementById('quiz-access-page');
+const quizPage = document.getElementById('quiz-page');
+const resultsPage = document.getElementById('results-page');
+const allMcqsPage = document.getElementById('all-mcqs-page');
+const questionNavEl = document.getElementById('question-nav');
+const questionTextEl = document.getElementById('question-text');
+const optionsContainerEl = document.getElementById('options-container');
+const reasoningEl = document.getElementById('reasoning');
+const reasoningTextEl = document.getElementById('reasoning-text');
+const quizTitleEl = document.getElementById('quiz-title');
+const totalTimerEl = document.getElementById('timer');
+const questionTimerEl = document.getElementById('question-timer');
+const quizProgressEl = document.getElementById('quiz-progress');
+const studentInfoTable = document.getElementById('student-info-table');
+const quizResultsTable = document.getElementById('quiz-results-table');
+const allMcqsList = document.getElementById('all-mcqs-list');
+const devPasswordInput = document.getElementById('developerPassword');
+const devErrorBox = document.getElementById('dev-error-box');
+const quizAccessCodeInput = document.getElementById('quizAccessCode');
+const quizAccessErrorBox = document.getElementById('quiz-error-box');
+const quizAccessFinalInput = document.getElementById('quizAccessFinal');
+const finalQuizErrorBox = document.getElementById('final-quiz-error-box');
+const toggleDevPasswordIcon = document.getElementById('toggleDeveloperPassword');
+const toggleQuizCodeIcon = document.getElementById('toggleQuizAccessCode');
+const toggleFinalQuizIcon = document.getElementById('toggleQuizAccessFinal');
+
+// Event listeners for password visibility
+if (toggleDevPasswordIcon) toggleDevPasswordIcon.addEventListener('click', () => togglePasswordVisibility('developerPassword', 'toggleDeveloperPassword'));
+if (toggleQuizCodeIcon) toggleQuizCodeIcon.addEventListener('click', () => togglePasswordVisibility('quizAccessCode', 'toggleQuizAccessCode'));
+if (toggleFinalQuizIcon) toggleFinalQuizIcon.addEventListener('click', () => togglePasswordVisibility('quizAccessFinal', 'toggleQuizAccessFinal'));
+
+// Functions
+function showPage(pageId) {
+    const pages = document.querySelectorAll('.page');
+    pages.forEach(page => page.classList.remove('active'));
+    document.getElementById(pageId).classList.add('active');
+}
+
+function togglePasswordVisibility(inputID, iconID) {
+    const passwordInput = document.getElementById(inputID);
+    const toggleIcon = document.getElementById(iconID);
+    
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        toggleIcon.classList.remove('fa-eye-slash');
+        toggleIcon.classList.add('fa-eye');
+    } else {
+        passwordInput.type = 'password';
+        toggleIcon.classList.remove('fa-eye');
+        toggleIcon.classList.add('fa-eye-slash');
+    }
+}
+
+function showQuizAccessForm() {
+    document.getElementById('quiz-access-form').style.display = 'flex';
+    document.getElementById('developer-access-form').style.display = 'none';
+}
+
+function showDeveloperAccessForm() {
+    document.getElementById('developer-access-form').style.display = 'flex';
+    document.getElementById('quiz-access-form').style.display = 'none';
+}
+
+function showRegistrationPage() {
+    showPage('registration-page');
+}
+
+function checkDeveloperPassword() {
+    if (devPasswordInput.value === DEV_ACCESS_CODE) {
+        devErrorBox.style.display = 'none';
+        startQuiz('PreMium-001', 'Developer');
+    } else {
+        devErrorBox.style.display = 'block';
+    }
+}
+
+function checkQuizAccessCode() {
+    if (quizAccessCodeInput.value === QUIZ_ACCESS_CODE) {
+        quizAccessErrorBox.style.display = 'none';
+        showPage('quiz-access-page');
+    } else {
+        quizAccessErrorBox.style.display = 'block';
+    }
+}
+
+function accessQuiz() {
+    if (quizAccessFinalInput.value === QUIZ_ACCESS_CODE) {
+        finalQuizErrorBox.style.display = 'none';
+        startQuiz('PreMium-001', 'Student');
+    } else {
+        finalQuizErrorBox.style.display = 'block';
+    }
+}
+
+function validateRegistrationForm() {
+    const fields = ['studentName', 'fatherName', 'email', 'mobile'];
+    for (const field of fields) {
+        if (document.getElementById(field).value.trim() === '') {
+            alert('Please fill in all the registration details.');
+            return;
+        }
+    }
+    
+    studentData = {
+        'Student Name': document.getElementById('studentName').value,
+        'Father Name': document.getElementById('fatherName').value,
+        'Email Address': document.getElementById('email').value,
+        'Mobile Number': document.getElementById('mobile').value
+    };
+
+    // Save to local storage
+    localStorage.setItem('studentData', JSON.stringify(studentData));
+    
+    showPage('payment-page');
+}
+
+function submitPayment() {
+    // Collect the data from the form fields
+    const transactionId = document.getElementById('transactionId').value;
+    const accountHolderName = document.getElementById('accountHolderName').value;
+    const amountSent = document.getElementById('amountSent').value;
+
+    // Check if the acknowledgment box is checked
+    if (!document.getElementById('acknowledgment').checked) {
+        alert('Please check the acknowledgment box to proceed.');
+        return;
+    }
+
+    // Check for empty fields.
+    if (!transactionId || !accountHolderName || !amountSent) {
+        alert('Please ensure all required fields are filled out.');
+        return;
+    }
+
+    // Save payment data to local storage
+    const paymentData = {
+        transactionId: transactionId,
+        accountHolderName: accountHolderName,
+        amountSent: amountSent
+    };
+    
+    localStorage.setItem('paymentData', JSON.stringify(paymentData));
+    
+    alert("Payment details submitted successfully! You will receive your Quiz Access Code shortly.");
+    showPage('quiz-access-page');
+}
+
+function startQuiz(quizId, userType) {
+    currentQuizId = quizId;
+    quizData = quizData_PreMium_001;
+    currentQuestion = 0;
+    userAnswers = Array(quizData.length).fill(null);
+    outOfSyllabusQuestions = Array(quizData.length).fill(false);
+    
+    // Set total time based on time per question
+    timeLeft = quizData.length * 60;
+    questionTimeLeft = 60;
+
+    showPage('quiz-page');
+    initQuiz();
+}
+
+function initQuiz() {
+    quizTitleEl.textContent = `Test - ID: ${currentQuizId}`;
+    renderQuestionNav();
+    renderQuestion();
+
+    if (totalTimeInterval) clearInterval(totalTimeInterval);
+    if (questionTimeInterval) clearInterval(questionTimeInterval);
+    
+    totalTimeInterval = setInterval(updateTotalTimer, 1000);
+    questionTimeInterval = setInterval(updateQuestionTimer, 1000);
+}
+
+function updateTotalTimer() {
+    if (timeLeft > 0) {
+        timeLeft--;
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+        totalTimerEl.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    } else {
+        clearInterval(totalTimeInterval);
+        submitTest();
+    }
+}
+
+function updateQuestionTimer() {
+    if (questionTimeLeft > 0) {
+        questionTimeLeft--;
+        questionTimerEl.textContent = `${questionTimeLeft}`;
+    } else {
+        questionTimeLeft = 60;
+        navigateQuestion('next');
+    }
+}
+
+function renderQuestionNav() {
+    questionNavEl.innerHTML = '';
+    quizData.forEach((_, index) => {
+        const navItem = document.createElement('div');
+        navItem.classList.add('question-nav-item');
+        navItem.textContent = index + 1;
+        navItem.onclick = () => navigateQuestion(index);
+        
+        if (index === currentQuestion) {
+            navItem.classList.add('current');
+        } else if (userAnswers[index] !== null) {
+            navItem.classList.add('solved');
+        } else if (outOfSyllabusQuestions[index]) {
+            navItem.classList.add('out-of-syllabus');
+        } else {
+            navItem.classList.add('visited');
+        }
+        
+        questionNavEl.appendChild(navItem);
+    });
+    updateProgressBar();
+}
+
+function updateProgressBar() {
+    const solvedCount = userAnswers.filter(answer => answer !== null).length;
+    const progress = (solvedCount / quizData.length) * 100;
+    quizProgressEl.style.width = `${progress}%`;
+}
+
+function renderQuestion() {
+    reasoningEl.style.display = 'none';
+    const question = quizData[currentQuestion];
+    questionTextEl.textContent = `${currentQuestion + 1}. ${question.question}`;
+    
+    optionsContainerEl.innerHTML = '';
+    question.options.forEach((option, index) => {
+        const optionEl = document.createElement('div');
+        optionEl.classList.add('option');
+        optionEl.textContent = option;
+        
+        // Add click listener only if not already answered
+        if (userAnswers[currentQuestion] === null) {
+            optionEl.onclick = () => selectOption(index);
+        } else {
+            // Show visual feedback for already answered questions
+            if (index === userAnswers[currentQuestion]) {
+                optionEl.classList.add(userAnswers[currentQuestion] === question.correctAnswer ? 'correct' : 'incorrect');
+            }
+        }
+        
+        optionsContainerEl.appendChild(optionEl);
+    });
+    
+    questionTimeLeft = 60;
+    questionTimerEl.textContent = `${questionTimeLeft}`;
+    renderQuestionNav();
+}
+
+function selectOption(optionIndex) {
+    const question = quizData[currentQuestion];
+    userAnswers[currentQuestion] = optionIndex;
+    
+    // Apply visual feedback
+    const options = optionsContainerEl.querySelectorAll('.option');
+    options.forEach((option, index) => {
+        option.onclick = null; // Disable further clicks
+        if (index === question.correctAnswer) {
+            option.classList.add('correct');
+        } else if (index === optionIndex) {
+            option.classList.add('incorrect');
+        }
+    });
+
+    renderQuestionNav();
+}
+
+function navigateQuestion(direction) {
+    if (direction === 'next') {
+        currentQuestion = (currentQuestion + 1) % quizData.length;
+    } else if (direction === 'prev') {
+        currentQuestion = (currentQuestion - 1 + quizData.length) % quizData.length;
+    } else if (direction === 'skip') {
+        // Do nothing, just move to the next question
+        currentQuestion = (currentQuestion + 1) % quizData.length;
+    } else {
+        currentQuestion = direction;
+    }
+    renderQuestion();
+}
+
+function toggleReasoning() {
+    const question = quizData[currentQuestion];
+    if (reasoningEl.style.display === 'block') {
+        reasoningEl.style.display = 'none';
+    } else {
+        reasoningTextEl.textContent = question.reasoning;
+        reasoningEl.style.display = 'block';
+    }
+}
+
+function markOutOfSyllabus() {
+    outOfSyllabusQuestions[currentQuestion] = true;
+    userAnswers[currentQuestion] = null;
+    renderQuestionNav();
+    navigateQuestion('next');
+}
+
+function submitTest() {
+    if (confirm('Are you sure you want to submit the quiz?')) {
+        clearInterval(totalTimeInterval);
+        clearInterval(questionTimeInterval);
+
+        let correct = 0;
+        let incorrect = 0;
+        let unanswered = 0;
+        let outOfSyllabus = 0;
+
+        quizData.forEach((question, index) => {
+            if (outOfSyllabusQuestions[index]) {
+                outOfSyllabus++;
+            } else if (userAnswers[index] === null) {
+                unanswered++;
+            } else if (userAnswers[index] === question.correctAnswer) {
+                correct++;
+            } else {
+                incorrect++;
+            }
+        });
+
+        const totalQuestions = quizData.length;
+        const totalScore = (correct * 4) - (incorrect * 1);
+
+        // Load student data from local storage
+        const savedStudentData = JSON.parse(localStorage.getItem('studentData') || '{}');
+        
+        // Populate student info table
+        let studentInfoHtml = '';
+        for (const [key, value] of Object.entries(savedStudentData)) {
+            studentInfoHtml += `<tr><td>${key}</td><td>${value}</td></tr>`;
+        }
+        studentInfoTable.innerHTML = studentInfoHtml;
+
+        // Populate quiz results table
+        quizResultsTable.innerHTML = `
+            <tr><td>Total Questions</td><td>${totalQuestions}</td></tr>
+            <tr><td>Correct Answers</td><td>${correct}</td></tr>
+            <tr><td>Incorrect Answers</td><td>${incorrect}</td></tr>
+            <tr><td>Unanswered</td><td>${unanswered}</td></tr>
+            <tr><td>Out of Syllabus</td><td>${outOfSyllabus}</td></tr>
+            <tr><td>Your Score</td><td>${totalScore} / ${totalQuestions * 4}</td></tr>
+        `;
+
+        showPage('results-page');
+    }
+}
+
+function restartTest() {
+    if (confirm('Are you sure you want to retake the full test? Your current progress will be lost.')) {
+        // Reset quiz data and state
+        quizData = quizData_PreMium_001;
+        currentQuestion = 0;
+        userAnswers = Array(quizData.length).fill(null);
+        outOfSyllabusQuestions = Array(quizData.length).fill(false);
+        timeLeft = quizData.length * 60;
+        
+        showPage('quiz-page');
+        initQuiz();
+    }
+}
+
+function retakeIncorrect() {
+    const incorrectQuestions = quizData.filter((question, index) => 
+        !outOfSyllabusQuestions[index] && 
+        userAnswers[index] !== null && 
+        userAnswers[index] !== question.correctAnswer);
+    
+    if (incorrectQuestions.length === 0) {
+        alert('You have no incorrect questions to retake!');
+        return;
+    }
+    
+    quizData = incorrectQuestions;
+    currentQuestion = 0;
+    userAnswers = Array(quizData.length).fill(null);
+    outOfSyllabusQuestions = Array(quizData.length).fill(false);
+    timeLeft = quizData.length * 60;
+    
+    showPage('quiz-page');
+    initQuiz();
+}
+
+function viewAllMcqs() {
+    allMcqsList.innerHTML = '';
+    quizData_PreMium_001.forEach((question, index) => {
+        const mcqItem = document.createElement('div');
+        mcqItem.classList.add('all-mcq-item');
+        mcqItem.innerHTML = `
+            <div class="question-text">${index + 1}. ${question.question}</div>
+            <div class="all-mcq-options">
+                ${question.options.map((option, optIndex) => `
+                    <div class="all-mcq-option ${optIndex === question.correctAnswer ? 'correct' : ''}">
+                        ${option}
+                    </div>
+                `).join('')}
+            </div>
+            <div class="all-mcq-reasoning">
+                <strong>Reasoning:</strong> ${question.reasoning}
+            </div>
+        `;
+        allMcqsList.appendChild(mcqItem);
+    });
+    showPage('all-mcqs-page');
+}
+
+// Initial state
+showPage('signin-page');
+</script>
+</body>
+</html>
+                            
